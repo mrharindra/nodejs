@@ -1,0 +1,43 @@
+<html>
+    <body>
+      <div>
+        <h4>User</h4>        
+        <li>Signup: POST {HOST_NAME}/signup</li>
+        <li>Login:  POST https://ngtodoapp.herokuapp.com/login</li>
+        <br/></br>
+        <li>Get all users:     GET https://ngtodoapp.herokuapp.com/user</li>
+        <li>Get user by ID:    GET https://ngtodoapp.herokuapp.com/user/{id}</li>
+        <li>Update User    PUT https://ngtodoapp.herokuapp.com/user/{id}</li>
+        <li>Delete user:   DELETE https://ngtodoapp.herokuapp.com/user/{id}</li>
+        <b>User schema</b>
+        <pre> 
+            { 
+                "name":"",
+                "email":"",
+                "password":""
+            } 
+        </pre>
+      </div>
+
+      <div>
+        <h4>TODO</h4>        
+        <li>Get all TODOs:     GET https://ngtodoapp.herokuapp.com/todo</li>
+        <li>Get TODO by ID:    GET https://ngtodoapp.herokuapp.com/todo/{id}</li>
+        <li>Update TODO    PUT https://ngtodoapp.herokuapp.com/todo/{id}</li>
+        <li>Delete TODO:   DELETE https://ngtodoapp.herokuapp.com/todo/{id}</li>
+        <b>TODO schema</b>
+        <pre> 
+            { 
+                "id":<number>,
+                "title":"",
+                "desc":""
+                "isFavorite":true,
+                "creationTime":<number-time in millis>,
+                "lmTime":<number-time in millis></number-time>
+            } 
+        </pre>
+      </div>
+
+
+    </body>
+</html>
