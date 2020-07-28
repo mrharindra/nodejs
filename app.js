@@ -28,6 +28,10 @@ app.use(async (req, res, next) => {
     next();            
 });
 
+app.get('/', function(req, res){
+    res.send("Running....");
+});
+
 app.get('/todo', function(req, res){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
     var data = todoService.getAllTodos();    
@@ -145,7 +149,7 @@ app.delete('/user/:userId', function(req, res){
 });
 
 
-const publicApi = ['/signup', '/signup/','/login', '/login/'];
+const publicApi = ['','/', '/signup', '/signup/','/login', '/login/'];
 
 
 function isAuthRequired(api)
