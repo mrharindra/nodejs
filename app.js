@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser')
 const TodoService = require('./TodoService');
@@ -13,6 +14,10 @@ app.use( bodyParser.json() );
 
 app.use(async (req, res, next) => {
     
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+
     if(isAuthRequired(req.originalUrl) == false)
     {
         next();
@@ -29,7 +34,15 @@ app.use(async (req, res, next) => {
 });
 
 app.get('/', function(req, res){
-    res.send("Running....");
+
+    var hostname = req.protocol+'://'+ req.headers.host;
+    var greet2 = fs.readFile(__dirname + '/index.html', 'utf8', function(err, data) {
+        //console.log(data);
+        res.send(data.replace('{HOST_NAME}', hostname));
+    });
+
+
+
 });
 
 app.get('/todo', function(req, res){
@@ -102,7 +115,7 @@ app.post('/login', function(req, res){
     var user = userService.login( data );    
     if(user){
         let token = jwtUtil.generateJWTToken( user );
-        res.send({"token" : token} );
+        res.send({"token" : token, "type":"Bearer"} );
     }
     else
     {
@@ -169,6 +182,8 @@ function validateAuth(req, res)
         res.sendStatus(401);
         return false;
     }
+
+    authHeader = authHeader.replace('Bearer ','').authHeader.replace('bearer ','');
 
     var obj = jwtUtil.verifyToken(authHeader);
     if( obj == null)
