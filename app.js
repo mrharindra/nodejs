@@ -38,8 +38,8 @@ app.get('/', function(req, res){
     //var hostname = req.protocol+'://'+ req.headers.host;
 
     var greet2 = fs.readFile(__dirname + '/index.html', 'utf8', function(err, data) {
-        //console.log(data);
         //res.send(data.replace('{HOST_NAME}', hostname));
+        res.send(data);
     });
 
 });

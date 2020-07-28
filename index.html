@@ -1,14 +1,25 @@
 <html>
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
     <body>
       <div>
-        <h4>User</h4>        
-        <li>Signup: POST https://ngtodoapp.herokuapp.com/signup</li>
-        <li>Login:  POST https://ngtodoapp.herokuapp.com/login</li>
-        <br/></br>
-        <li>Get all users:     GET https://ngtodoapp.herokuapp.com/user</li>
-        <li>Get user by ID:    GET https://ngtodoapp.herokuapp.com/user/{id}</li>
-        <li>Update User    PUT https://ngtodoapp.herokuapp.com/user/{id}</li>
-        <li>Delete user:   DELETE https://ngtodoapp.herokuapp.com/user/{id}</li>
+        <h4>User</h4>
+        <table>
+            <tr><th>API Name</th><th>HTTP Method</th><th>API URI</th></tr>
+            <tr><td>Signup</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/signup</td></tr>
+            <tr><td>Login</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/login</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>Get all users</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/user</td></tr>
+            <tr><td>Get user by ID</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
+            <tr><td>Update User</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
+            <tr><td>Delete user</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>            
+        </table>        
         <b>User schema</b>
         <pre> 
             { 
@@ -20,11 +31,13 @@
       </div>
 
       <div>
-        <h4>TODO</h4>        
-        <li>Get all TODOs:     GET https://ngtodoapp.herokuapp.com/todo</li>
-        <li>Get TODO by ID:    GET https://ngtodoapp.herokuapp.com/todo/{id}</li>
-        <li>Update TODO    PUT https://ngtodoapp.herokuapp.com/todo/{id}</li>
-        <li>Delete TODO:   DELETE https://ngtodoapp.herokuapp.com/todo/{id}</li>
+        <h4>TODO</h4>
+        <table>
+            <tr><td>Get all TODOs</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/todo</td></tr>
+            <tr><td>Get TODO by ID</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
+            <tr><td>Update TODO</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
+            <tr><td>Delete TODO</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>            
+        </table>
         <b>TODO schema</b>
         <pre> 
             { 
