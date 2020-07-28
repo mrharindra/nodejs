@@ -7,6 +7,8 @@ var jwtUtil = require('./jwtUtil');
 var todoService = new TodoService();
 var userService = new UserService();
 
+var byPassAuth = true;
+
 var app = express();
 //app.use(express.urlencoded({ extended: true })) 
 
@@ -35,6 +37,15 @@ app.use(async (req, res, next) => {
 
 app.get('/', function(req, res){
 
+    if(req.query.auth == 1 )
+    {
+        byPassAuth = false;
+    }
+    if(req.query.auth == 0 )
+    {
+        byPassAuth = true;
+    }
+    
     //var hostname = req.protocol+'://'+ req.headers.host;
 
     var greet2 = fs.readFile(__dirname + '/index.html', 'utf8', function(err, data) {
@@ -163,9 +174,17 @@ app.delete('/user/:userId', function(req, res){
 
 const publicApi = ['','/', '/signup', '/signup/','/login', '/login/'];
 
-
 function isAuthRequired(api)
-{
+{    
+    if( byPassAuth )
+    {
+        return false;
+    }
+    var i = api.indexOf('?');
+    if(  i > -1){
+        api = api.substring(0, i);
+    }
+    
     if( publicApi.indexOf(api) == -1)
     {
         return true;
