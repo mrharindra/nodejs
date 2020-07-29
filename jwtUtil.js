@@ -3,8 +3,8 @@
 var jwt = require('jsonwebtoken')
 const SECRET_KEY = "thisisdummysecret@2020";
 
-exports.generateJWTToken = (userData) =>{
-    return jwt.sign(userData, SECRET_KEY);
+exports.generateJWTToken = (userData, jwtExpTime) =>{
+    return jwt.sign(userData, SECRET_KEY, { expiresIn: jwtExpTime });
 };
 
 exports.verifyToken = (jwtToken) =>{

@@ -15,7 +15,13 @@ class UserService{
     }
 
     getAllUsers(){
-        return this.data;
+        var users = [];
+        for(var i in this.data){
+            let cloneData = Object.assign({}, this.data[i]);
+            delete cloneData.password;            
+            users.push( cloneData );
+        }        
+        return users;
     };
 
     getUser(userId){        
@@ -23,7 +29,9 @@ class UserService{
         {
             if(this.data[i].id == userId)
             {                
-                return this.data[i];
+                let cloneData = Object.assign({}, this.data[i]);
+                delete cloneData.password;
+                return cloneData;
             }
         }
         return null;    
@@ -44,7 +52,7 @@ class UserService{
         // Write data in file
         var json = JSON.stringify( this.data );
         fs.writeFile('UserCollections.json', json, 'utf8', function(){
-            console.log("New data saved in file");
+            console.log("New user saved in file");
         });
 
         return newUser;
@@ -66,7 +74,7 @@ class UserService{
                 // Write data in file
                 let json = JSON.stringify(this.data);
                 fs.writeFile('UserCollections.json', json, 'utf8',function(){
-                    console.log("Data is updated in file");
+                    console.log("User is updated in file");
                 });
 
                 return oldObj;
@@ -86,7 +94,7 @@ class UserService{
                 // Remove data from file   
                 let json = JSON.stringify(this.data);
                 fs.writeFileSync('UserCollections.json', json, 'utf8', function(){
-                    console.log("data is deleted from file");
+                    console.log("User is deleted from file");
                 });
 
                 return this.data[i];
@@ -102,8 +110,9 @@ class UserService{
         for (var i in this.data)
         {
             if(this.data[i].email == loginData.email)
-            {                
-                if(this.data[i].password = loginData.password)
+            {      
+                //console.log( this.data[i].password, loginData.password)          
+                if(this.data[i].password == loginData.password)
                 {
                     return this.data[i];
                 }                

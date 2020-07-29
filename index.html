@@ -9,16 +9,16 @@
     </head>
     <body>
       <div>
-        <h4>User</h4>
+        <h3>User</h3>
         <table>
             <tr><th>API Name</th><th>HTTP Method</th><th>API URI</th></tr>
             <tr><td>Signup</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/signup</td></tr>
             <tr><td>Login</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/login</td></tr>
             <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
             <tr><td>Get all users</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/user</td></tr>
-            <tr><td>Get user by ID</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
-            <tr><td>Update User</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
-            <tr><td>Delete user</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>            
+            <tr><td>Get user by ID</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
+            <tr><td>Update User</td><td>PUT</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>
+            <tr><td>Delete user</td><td>DELETE</td><td>https://ngtodoapp.herokuapp.com/user/{id}</td></tr>            
         </table>        
         <b>User schema</b>
         <pre> 
@@ -31,12 +31,12 @@
       </div>
 
       <div>
-        <h4>TODO</h4>
+        <h3>TODO</h3>
         <table>
             <tr><td>Get all TODOs</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/todo</td></tr>
-            <tr><td>Get TODO by ID</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
-            <tr><td>Update TODO</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
-            <tr><td>Delete TODO</td><td>POST</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>            
+            <tr><td>Get TODO by ID</td><td>GET</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
+            <tr><td>Update TODO</td><td>PUT</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>
+            <tr><td>Delete TODO</td><td>DELETE</td><td>https://ngtodoapp.herokuapp.com/todo/{id}</td></tr>            
         </table>
         <b>TODO schema</b>
         <pre> 
@@ -51,6 +51,15 @@
         </pre>
       </div>
 
+      <div>
+        <h3>Configuration</h3>
+        <table>
+            <tr><td>Enable/Disable authorized access</td><td>GET</td><td>http://localhost:8080/config?auth=0</td></tr>
+            <tr><td>Set the Auth JWT expiry time (seconds)</td><td>GET</td><td>http://localhost:8080/config?jwt_exp=3600</td></tr>
+            <tr><td>Get Configurations</td><td>GET</td><td>http://localhost:8080/config</td></tr>
+        </table>        
+      </div>
 
+      
     </body>
 </html>

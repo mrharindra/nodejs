@@ -8,6 +8,7 @@ var todoService = new TodoService();
 var userService = new UserService();
 
 var byPassAuth = true;
+var jwtExpTime = 24*60*60; // 24h
 
 var app = express();
 //app.use(express.urlencoded({ extended: true })) 
@@ -35,8 +36,17 @@ app.use(async (req, res, next) => {
     next();            
 });
 
-app.get('/', function(req, res){
+app.get('/', function(req, res){    
+    //var hostname = req.protocol+'://'+ req.headers.host;
+    var greet2 = fs.readFile(__dirname + '/index.html', 'utf8', function(err, data) {
+        //res.send(data.replace('{HOST_NAME}', hostname));
+        res.send(data);
+    });
 
+});
+
+app.get('/config', function(req, res){
+    
     if(req.query.auth == 1 )
     {
         byPassAuth = false;
@@ -45,14 +55,14 @@ app.get('/', function(req, res){
     {
         byPassAuth = true;
     }
-    
-    //var hostname = req.protocol+'://'+ req.headers.host;
+    if(req.query.jwt_exp > 1 )
+    {
+        jwtExpTime = Number.parseInt(req.query.jwt_exp);        
+    }
 
-    var greet2 = fs.readFile(__dirname + '/index.html', 'utf8', function(err, data) {
-        //res.send(data.replace('{HOST_NAME}', hostname));
-        res.send(data);
-    });
-
+    res.send({  authRequired:!byPassAuth,
+                jwtExpiresInSeconds:jwtExpTime
+        });
 });
 
 app.get('/todo', function(req, res){
@@ -124,8 +134,12 @@ app.post('/login', function(req, res){
     var data = req.body;    
     var user = userService.login( data );    
     if(user){
-        let token = jwtUtil.generateJWTToken( user );
-        res.send({"token" : token, "type":"Bearer"} );
+        var payload = {name:user.name, email:user.email,userId:user.id};
+        let token = jwtUtil.generateJWTToken( payload, jwtExpTime);
+        res.send({ "token" : token,
+                    "type":"Bearer",
+                    "expiresInSeconds":jwtExpTime-1
+            } );
     }
     else
     {
@@ -172,7 +186,7 @@ app.delete('/user/:userId', function(req, res){
 });
 
 
-const publicApi = ['','/', '/signup', '/signup/','/login', '/login/'];
+const publicApi = ['','/', '/signup', '/signup/','/login', '/login/','/config','/config/'];
 
 function isAuthRequired(api)
 {    
@@ -200,8 +214,8 @@ function validateAuth(req, res)
         res.sendStatus(401);
         return false;
     }
-
-    authHeader = authHeader.replace('Bearer ','').authHeader.replace('bearer ','');
+    
+    authHeader = authHeader.replace('Bearer ','').replace('bearer ','');
 
     var obj = jwtUtil.verifyToken(authHeader);
     if( obj == null)

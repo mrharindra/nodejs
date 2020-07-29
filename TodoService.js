@@ -48,7 +48,7 @@ class TodoService{
         // Write data in file
         var json = JSON.stringify( this.data );
         fs.writeFile('TodoCollections.json', json, 'utf8', function(){
-            console.log("New data saved in file");
+            console.log("New TODO saved in file");
         });
 
         return newTodo;
@@ -75,7 +75,7 @@ class TodoService{
                 // Write data in file
                 let json = JSON.stringify(this.data);
                 fs.writeFile('TodoCollections.json', json, 'utf8',function(){
-                    console.log("Data is updated in file");
+                    console.log("TODO is updated in file");
                 });
 
                 return oldObj;
@@ -95,7 +95,7 @@ class TodoService{
                 // Remove data from file   
                 let json = JSON.stringify(this.data);
                 fs.writeFileSync('TodoCollections.json', json, 'utf8', function(){
-                    console.log("data is deleted from file");
+                    console.log("TODO is deleted from file");
                 });
 
                 return this.data[i];
