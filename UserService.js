@@ -14,7 +14,8 @@ class UserService{
         }            
     }
 
-    getAllUsers(){
+    getAllUsers()
+    {
         var users = [];
         for(var i in this.data){
             let cloneData = Object.assign({}, this.data[i]);
@@ -24,7 +25,8 @@ class UserService{
         return users;
     };
 
-    getUser(userId){        
+    getUser(userId)
+    {        
         for (var i in this.data)
         {
             if(this.data[i].id == userId)
@@ -37,8 +39,8 @@ class UserService{
         return null;    
     }
 
-    addUser(user){
-        
+    addUser(user)
+    {        
         var newUser = {};
         newUser.id = util.unique();
         newUser.name = user.name;
@@ -58,8 +60,8 @@ class UserService{
         return newUser;
     }
     
-    updateUser(userId, user){
-
+    updateUser(userId, user)
+    {
         for (var i in this.data)
         {
             if(this.data[i].id == userId)
@@ -84,7 +86,8 @@ class UserService{
         return null;
     }
 
-    deleteUser(userId){        
+    deleteUser(userId)
+    {        
         for (var i in this.data)
         {                        
             if(this.data[i].id == userId)
@@ -106,12 +109,12 @@ class UserService{
 
 
 
-    login(loginData){        
+    login(loginData)
+    {        
         for (var i in this.data)
         {
             if(this.data[i].email == loginData.email)
             {      
-                //console.log( this.data[i].password, loginData.password)          
                 if(this.data[i].password == loginData.password)
                 {
                     return this.data[i];
@@ -119,8 +122,7 @@ class UserService{
             }
         }
         return null;    
-    }
-    
+    }    
     
 };
 

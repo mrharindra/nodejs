@@ -2,7 +2,8 @@
 var fs = require('fs');
 var util = require('./util');
 
-class TodoService{    
+class TodoService
+{    
     constructor()
     {
         var ldata = fs.readFileSync('TodoCollections.json', 'utf8');    
@@ -14,27 +15,47 @@ class TodoService{
         }            
     }
 
-    getAllTodos(){
-        return this.data;
+    getAllTodos(authContext)
+    {
+        var notes = [];
+        for(var i in this.data){
+            //let cloneData = Object.assign({}, this.data[i]);            
+            if( authContext && authContext.userId != this.data[i].createdBy )
+            {
+                continue;
+            }            
+            notes.push( this.data[i] );            
+        }        
+        return notes;
     };
 
-    getTodo(todoId){        
+    getTodo(todoId,authContext)
+    {        
         for (var i in this.data)
-        {
+        {            
             if(this.data[i].id == todoId)
-            {                
+            {          
+                if( authContext && authContext.userId != this.data[i].createdBy )
+                {
+                    throw "Unauthorized";                                        
+                }                
                 return this.data[i];
             }
         }
         return null;    
     }
 
-    addTodo(todo){
-        
+    addTodo(todo, authContext)
+    {        
         var newTodo = {};
         newTodo.id = util.unique();
         newTodo.title = todo.title;
         newTodo.desc = todo.desc;
+        
+        if( authContext ){
+            newTodo.createdBy = authContext.userId;
+            newTodo.lmBy = authContext.userId;
+        }
 
         newTodo.isFavorite = false;
         if( todo.isFavorite){
@@ -54,8 +75,8 @@ class TodoService{
         return newTodo;
     }
     
-    updateTodo(todoId, todo){
-
+    updateTodo(todoId, todo, authContext)
+    {
         if(!todo.isFavorite)
         {
             todo.isFavorite = false;
@@ -65,13 +86,20 @@ class TodoService{
         {
             if(this.data[i].id == todoId)
             {
+                if( authContext && authContext.userId != this.data[i].createdBy )
+                {
+                    throw "Unauthorized";                                        
+                }
+
                 var oldObj = this.data[i];
 
                 oldObj.lmTime =  Date.now();
                 oldObj.title = todo.title;
                 oldObj.desc = todo.desc;
                 oldObj.isFavorite = todo.isFavorite;
-
+                if( authContext ){
+                    oldObj.lmBy = authContext.userId;                    
+                }
                 // Write data in file
                 let json = JSON.stringify(this.data);
                 fs.writeFile('TodoCollections.json', json, 'utf8',function(){
@@ -85,12 +113,16 @@ class TodoService{
         return null;
     }
 
-    deleteTodo(todoId){        
+    deleteTodo(todoId, authContext)
+    {        
         for (var i in this.data)
         {                        
             if(this.data[i].id == todoId)
-            {
-                this.data.splice(i,1);             
+            { 
+                if( authContext && authContext.userId != this.data[i].createdBy )
+                {
+                    throw "Unauthorized";                                        
+                }                
                 
                 // Remove data from file   
                 let json = JSON.stringify(this.data);
