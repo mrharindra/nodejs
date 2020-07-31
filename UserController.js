@@ -7,8 +7,16 @@ module.exports = function(app) {
     
     app.post('/signup', function(req, res){
         res.setHeader('Content-Type', 'application/json;charset=utf-8');
-        var data = req.body;    
-        var user = userService.addUser( data );
+        var data = req.body;
+        var user = null;
+        try{
+            user = userService.addUser( data );
+        }
+        catch(e){
+            res.sendStatus(409);            
+            return;
+        }
+
         res.send( user );
     });
 
