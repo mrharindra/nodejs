@@ -20,7 +20,15 @@ app.use(async (req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Expose-Headers", "Content-Type");
 
+    //console.log( req.method );
+
+    if(req.method == "OPTIONS" || req.method == "options")
+    {
+        return;
+    }
+    
     if(isAuthRequired(req.originalUrl) == false)
     {
         req.authContext = {userId:0,name:'system'};
