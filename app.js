@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var jwtUtil = require('./jwtUtil');
 var config = require('./config');
+var cors = require('cors')
 
 var commonController = require('./CommonController');
 var todoController = require('./TodoController');
@@ -12,21 +13,33 @@ var userController = require('./UserController');
 var app = express();
 //app.use(express.urlencoded({ extended: true })) 
 
+var corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200,
+    methods:['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders:['Authorization', 'Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+    exposedHeaders:['Content-Type'],
+    credentials:true,
+    preflightContinue: false,
+}
+
+app.use( cors(corsOptions));
+
 app.use( bodyParser.json() );
 
 app.use(async (req, res, next) => {
     
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Expose-Headers", "Content-Type");
+    //res.header("Access-Control-Allow-Origin", "http://localhost:4200/");
+    //res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    //res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+    //res.header("Access-Control-Allow-Credentials", true);
+    //res.header("Access-Control-Expose-Headers", "Content-Type");
 
     //console.log( req.method );
 
     if(req.method == "OPTIONS" || req.method == "options")
     {
-        return;
+      //  return;
     }
     
     if(isAuthRequired(req.originalUrl) == false)
