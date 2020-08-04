@@ -124,6 +124,8 @@ class TodoService
                     throw "Unauthorized";                                        
                 }                
                 
+                this.data.splice(i,1);                
+
                 // Remove data from file   
                 let json = JSON.stringify(this.data);
                 fs.writeFileSync('TodoCollections.json', json, 'utf8', function(){
